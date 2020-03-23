@@ -28,28 +28,35 @@ class Chromosome:
 
     def mutation(self):
         randPosition = randint(0, len(self.__communities) - 1)
-        self.__communities[randPosition] = randint(0, len(self.__communities) - 1)
+        self.__communities[randPosition] = randint(1, len(self.__communities) - 1)
         self.linearizeCommunities()
 
     def linearizeCommunities(self):
         nr=len(self.__communities)
         currentCom=1
-        appear=False
-        for i in range(nr):
-            if self.__communities[i]<currentCom:
-                continue
-            if self.__communities[i]==currentCom:
-                appear=True
-                continue
-            if appear:
+        while(currentCom!=max(self.__communities)):
+            if currentCom not in self.__communities:
+                for i in range(len(self.__communities)):
+                    self.__communities[i]-=1
+            else:
                 currentCom+=1
-                if self.__communities[i]==currentCom:
-                    continue
-                appear=False
 
-            if self.__communities[i]>currentCom:
-                self.__prettySwap(self.__communities[i],currentCom)
-                appear=True
+        # appear=False
+        # for i in range(nr):
+        #     if self.__communities[i]<currentCom:
+        #         continue
+        #     if self.__communities[i]==currentCom:
+        #         appear=True
+        #         continue
+        #     if appear:
+        #         currentCom+=1
+        #         if self.__communities[i]==currentCom:
+        #             continue
+        #         appear=False
+        #
+        #     if self.__communities[i]>currentCom:
+        #         self.__prettySwap(self.__communities[i],currentCom)
+        #         appear=True
 
         self.__commNumber=currentCom
         # newCom = [0] * self.__commNumber
