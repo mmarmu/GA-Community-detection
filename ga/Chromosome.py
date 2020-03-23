@@ -25,6 +25,7 @@ class Chromosome:
                 currentNrOfComm += 1
 
         self.__commNumber = currentNrOfComm
+        self.linearizeCommunities()
 
     def mutation(self):
         randPosition = randint(0, len(self.__communities) - 1)
@@ -37,10 +38,11 @@ class Chromosome:
         while(currentCom!=max(self.__communities)):
             if currentCom not in self.__communities:
                 for i in range(len(self.__communities)):
-                    self.__communities[i]-=1
+                    if self.__communities[i]>currentCom:
+                        self.__communities[i]-=1
             else:
                 currentCom+=1
-
+        self.__commNumber = currentCom
         # appear=False
         # for i in range(nr):
         #     if self.__communities[i]<currentCom:
@@ -58,7 +60,7 @@ class Chromosome:
         #         self.__prettySwap(self.__communities[i],currentCom)
         #         appear=True
 
-        self.__commNumber=currentCom
+
         # newCom = [0] * self.__commNumber
         # nr = 0
         # for el in self.__communities:
@@ -78,7 +80,7 @@ class Chromosome:
 
     def crossover(self, other):
         newCommunity = [0] * len(self.__communities)
-        pivot=randint(0,(len(self.__communities)/2))
+        pivot=randint(0,int((len(self.__communities)/2)))
         for i in range(pivot):
             newCommunity[i]=self.__communities[i]
         for i in range(pivot,len(self.__communities)):
@@ -102,20 +104,20 @@ class Chromosome:
 
     def __str__(self):
         return '\nChromo: ' + str(self.__communities) + ' has fit: ' + str(self.__fitness)
-
-    def __prettySwap(self,first ,second):
-        for i in range(len(self.__communities)):
-            if self.__communities[i]==first:
-                self.__communities[i]=-1
-
-        for i in range(len(self.__communities)):
-            if self.__communities[i]==second:
-                self.__communities[i]=first
-
-        for i in range(len(self.__communities)):
-            if self.__communities[i]==-1:
-                self.__communities[i]=first
-
+    #
+    # def __prettySwap(self,first ,second):
+    #     for i in range(len(self.__communities)):
+    #         if self.__communities[i]==first:
+    #             self.__communities[i]=-1
+    #
+    #     for i in range(len(self.__communities)):
+    #         if self.__communities[i]==second:
+    #             self.__communities[i]=first
+    #
+    #     for i in range(len(self.__communities)):
+    #         if self.__communities[i]==-1:
+    #             self.__communities[i]=first
+    #
 
     def getGenNumber(self):
         return self.__genNumber

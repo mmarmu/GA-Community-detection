@@ -77,6 +77,21 @@ class GA:
         self.__currentGen+=1
         self.evaluation()
 
+
+    def oneGenerationSteadyState(self):
+        for i in range(len(self.__population)):
+            chromo1 = self.__population[self.selection()]
+            chromo2 = self.__population[self.selection()]
+
+            off =chromo1.crossover(chromo2)
+            off.mutation()
+            off.setFitness(self.modularity(off.getCommunities()))
+            worst=self.worstChromosomeIndex()
+
+            if off.getFitness()>self.__population[worst].getFitness():
+                self.__population[worst]=off
+
+        self.updateBestChromo()
     def getBestFitness(self):
         return self.__bestChromo.getFitness()
 
@@ -88,3 +103,13 @@ class GA:
 
     def getBestGeneration(self):
         return self.__bestChromo.getGenNumber()
+
+    def worstChromosomeIndex(self):
+        mini=min(self.__population,key=lambda x:x.getFitness())
+        for i in range(len(self.__population)):
+            if mini==self.__population[i]:
+                return i
+
+    def updateBestChromo(self):
+        maxi=max(self.__population,key=lambda x:x.getFitness())
+        self.__bestChromo=maxi

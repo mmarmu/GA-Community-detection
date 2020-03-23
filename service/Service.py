@@ -11,8 +11,8 @@ class Service:
         ga=GA(self.__repo.getGraph(),populationSize)
         output=[]
         for i in range(1,generationsNumber+1):
-            ga.oneGenerationElitism()
-            outt="\nGENERATION: "+str(i)+"| FITNESS: " + str(ga.getBestFitness())+"| NR: "+ str(ga.getBestCommunitiesNumber())
+            ga.oneGenerationSteadyState()
+            outt="\nGENERATION: "+str(i)+"| FITNESS: " + str(ga.getBestFitness())+"| NR COMUNITATI: "+ str(ga.getBestCommunitiesNumber())
             output+=[outt]
 
         comm=ga.getBestCommunities()

@@ -5,7 +5,7 @@ class Graph:
     def __init__(self,graph):
         self.__graph=netx.convert_node_labels_to_integers(graph)
         self.__data = netx.to_dict_of_lists(self.__graph)
-
+        self.__numpyGraph=netx.to_numpy_matrix(self.__graph)
     def existEdge(self,n1,n2):
         if n1>n2:
             n1,n2=n2,n1
@@ -35,8 +35,5 @@ class Graph:
         pass
 
     def getEdgeData(self,i,j):
-        rez=self.__graph.get_edge_data(i,j,default=0)
-        if  rez=={}:
-            return 0
-        else:
-            return rez
+        return self.__numpyGraph.item((i,j))
+
